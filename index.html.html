@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Ticket</title>
+</head>
+<body>
+    <h1>Get Ticket</h1>
+    <form id="ticketForm">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+        
+        <input type="submit" value="Get Ticket">
+    </form>
+
+    <script>
+        document.getElementById('ticketForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            
+            var data = {
+                EmailAddress: email,
+                Password: btoa(password)
+            };
+
+            fetch('https://uatprism1.convergeintl.com.au/api/Account/Login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Ticket received! Check the console for details.');
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
